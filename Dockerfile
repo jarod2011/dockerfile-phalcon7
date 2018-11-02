@@ -16,7 +16,9 @@ RUN apk --no-cache add hiredis libmemcached zlib libpng git && \
     cd phpredis/ && phpize && ./configure --enable-redis-igbinary && make && make install && \
     docker-php-ext-enable redis && \
     cd /tmp && git clone --depth=1 git://github.com/dreamsxin/cphalcon7.git && \
-    cd cphalcon7/ext/ && phpize && ./configure && make && make install && \
+    cp -rf /tmp/cphalcon7/devtools/ /usr/local/phalcon-devtools && \
+    ln -s /usr/local/phalcon-devtools/phalcon.php /usr/bin/phalcon && chmod ugo+x /usr/bin/phalcon && \
+    cd /tmp/cphalcon7/ext/ && phpize && ./configure && make && make install && \
     docker-php-ext-enable phalcon && \
     docker-php-ext-install mysqli pdo_mysql zip bcmath gd && \
     curl -sS https://getcomposer.org/installer | php && \
